@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Laboratorio de Minería de Datos"
+description = "Aplicación educativa con tres modelos de regresión lineal basados en CRISP-DM: análisis de dólar, glucosa y consumo de energía, visualizaciones, evaluación y predicción interactiva."
+version = "1.0.0"
+id = "artifacts/laboratorio-mineria"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20175
+
+[services.development]
+run = "pnpm --filter @workspace/laboratorio-mineria run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/laboratorio-mineria", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/laboratorio-mineria/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20175"
+BASE_PATH = "/"
